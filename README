@@ -119,7 +119,7 @@
 
 
 
-
+Build with VS2015 community version.
 
 Building OpenSSL 1.0.2d as a static library on Windows
 Note: Following text is extracted from my building instructions for SoftHSM2.
