@@ -102,6 +102,10 @@
 
  HOW TO CONTRIBUTE TO OpenSSL
  ----------------------------
+ 
+ 
+ 
+ 
 
  See CONTRIBUTING
 
@@ -112,3 +116,66 @@
  of cryptography. If you are potentially subject to such restrictions
  you should seek competent professional legal advice before attempting to
  develop or distribute cryptographic code.
+
+
+
+
+
+Building OpenSSL 1.0.2d as a static library on Windows
+Note: Following text is extracted from my building instructions for SoftHSM2.
+
+Required software
+Visual Studio (2015 Community)
+GNU Privacy Guard for Windows (2.2.5)
+7-zip (9.20)
+Strawberry Perl (5.22.0.1)
+The Netwide Assembler (2.11.08)
+Preparations
+Create working directories:
+
+mkdir C:\build\bin\
+mkdir C:\build\src\
+Download OpenSSL 1.0.2d with its signature into C:\build\src\ directory and verify signature of the downloaded archive:
+
+cd C:\build\src\
+gpg --keyserver pgp.mit.edu --recv-keys 0E604491
+gpg --verify openssl-1.0.2d.tar.gz.asc openssl-1.0.2d.tar.gz
+Building 32-bit version
+Extract archive openssl-1.0.2d.tar.gz into C:\build\src\openssl-1.0.2d-x86 directory:
+
+cd C:\build\src\
+"C:\Program Files\7-Zip\7z" x openssl-1.0.2d.tar.gz
+"C:\Program Files\7-Zip\7z" x openssl-1.0.2d.tar
+rename openssl-1.0.2d openssl-1.0.2d-x86
+del openssl-1.0.2d.tar
+In a new command line window build OpenSSL and install it into C:\build\bin\openssl-1.0.2d-x86 directory:
+
+cd C:\build\src\openssl-1.0.2d-x86
+set PATH=%PATH%;C:\nasm
+"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
+perl Configure VC-WIN32 --prefix=C:\build\bin\openssl-1.0.2d-x86 enable-static-engine
+ms\do_nasm
+nmake /f ms\nt.mak
+nmake /f ms\nt.mak test
+nmake /f ms\nt.mak install
+Resulting build is located in C:\build\bin\openssl-1.0.2d-x86 directory.
+
+Building 64-bit version
+Extract archive openssl-1.0.2d.tar.gz into C:\build\src\openssl-1.0.2d-x64 directory:
+
+cd C:\build\src\
+"C:\Program Files\7-Zip\7z" x openssl-1.0.2d.tar.gz
+"C:\Program Files\7-Zip\7z" x openssl-1.0.2d.tar
+rename openssl-1.0.2d openssl-1.0.2d-x64
+del openssl-1.0.2d.tar
+In a new command line window build OpenSSL and install it into C:\build\bin\openssl-1.0.2d-x64 directory:
+
+cd C:\build\src\openssl-1.0.2d-x64
+set PATH=%PATH%;C:\nasm
+"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
+perl Configure VC-WIN64A --prefix=C:\build\bin\openssl-1.0.2d-x64 enable-static-engine
+ms\do_win64a
+nmake /f ms\nt.mak
+nmake /f ms\nt.mak test
+nmake /f ms\nt.mak install
+Resulting build is located in C:\build\bin\openssl-1.0.2d-x64 directory.
