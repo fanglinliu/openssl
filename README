@@ -121,6 +121,8 @@
 
 Build with VS2015 community version.
 
+https://github.com/disig/SoftHSM2-for-Windows/blob/master/BUILDING.md
+http://stackoverflow.com/questions/34410711/how-to-build-openssl-in-vs2015-x86cpuid-asm-is-an-empty-file
 Building OpenSSL 1.0.2d as a static library on Windows
 Note: Following text is extracted from my building instructions for SoftHSM2.
 
